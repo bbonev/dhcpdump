@@ -5,7 +5,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.8 2003/01/21 13:17:41 mavetju Exp $
+// $Id: dhcpdump.c,v 1.9 2003/11/07 12:39:45 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -466,7 +466,7 @@ int printdata(uchar *data,int data_len) {
     }
 
     printf("---------------------------------------------------------------------------\n");
-    fflush(stdin);
+    fflush(stdout);
 
     return 0;
 }
