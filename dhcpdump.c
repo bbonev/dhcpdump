@@ -5,7 +5,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.9 2003/11/07 12:39:45 mavetju Exp $
+// $Id: dhcpdump.c,v 1.10 2003/11/07 13:04:49 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -261,6 +261,9 @@ int printdata(uchar *data,int data_len) {
 	    printHexString(data+j+2,data[j+1]);
 	    break;
 
+	case 0:		// pad
+	    break;
+
 	case  1:	// Subnetmask
 	case  3:	// Routers
 	case 16:	// Swap server
@@ -462,7 +465,10 @@ int printdata(uchar *data,int data_len) {
 	// My head hurts... but I think it's solved by the checking
 	// for j<data_len at the begin of the while-loop.
 	*/
-	j+=data[j+1]+2;
+	if (data[j]==0)		// padding
+	    j++;
+	else
+	    j+=data[j+1]+2;
     }
 
     printf("---------------------------------------------------------------------------\n");

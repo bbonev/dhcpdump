@@ -1,8 +1,10 @@
-$Id: CHANGES,v 1.8 2003/01/21 10:33:31 mavetju Exp $
+$Id: CHANGES,v 1.9 2003/11/07 12:39:45 mavetju Exp $
 
-version 1.5.1
+version 1.6
 	- Option 82, submitted by Phil Pennock <pdp@nl.demon.net>
 	- Add fflush(), submitted by Gary Colman <gary@colmans.net>
+	- Fix problem with padding, they were not handled properly
+	  and caused old memory to be reused.
 
 version 1.5
 	- better input checking regarding validity of the header
