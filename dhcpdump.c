@@ -6,7 +6,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.3 2001/08/28 06:48:15 mavetju Exp $
+// $Id: dhcpdump.c,v 1.4 2002/01/26 13:19:04 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -73,18 +73,18 @@ int main(int argc,char **argv) {
 	if (fgets(buf,LARGESTRING,stdin)==NULL)
 	    return 1;
 
-	//
-	// this is a header, salvage the information needed and go on:
-	// - time
-	// - mac origin
-	// - mac destination
-	// - ip origin
-	// - ip destination
-	//
-	if (buf[0]!='\t') {
+	if (isdigit(buf[0])) {
+	    //
+	    // this is a header, salvage the information needed and go on:
+	    // - time
+	    // - mac origin
+	    // - mac destination
+	    // - ip origin
+	    // - ip destination
+	    //
 	    readheader(buf);
 	    data_len=0;
-	} else {
+	} else if (buf[0]=='\t') {
 	    if (readdata(buf,data,&data_len)==1
 	    &&  ( !hmask || !check_ch(data,data_len,&preg)))
 		printdata(data,data_len);

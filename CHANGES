@@ -1,4 +1,8 @@
-$Id: CHANGES,v 1.4 2002/01/26 13:19:04 mavetju Exp $
+$Id: CHANGES,v 1.5 2002/01/26 14:18:18 mavetju Exp $
+
+version 1.5
+	- better input checking regarding validity of the header
+	  of the UDP packet (bug anton.holleman@nominum.com)
 
 version 1.4
 	- added auto-configure script
