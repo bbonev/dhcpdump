@@ -1,5 +1,5 @@
 //
-// $Id: dhcp_options.h,v 1.2 2002/11/04 09:41:28 mavetju Exp $
+// $Id: dhcp_options.h,v 1.3 2003/01/21 10:33:31 mavetju Exp $
 //
 
 //
@@ -7,7 +7,7 @@
 //
 
 // The first comment is the number, the last parameter is if it's verbosed
-char *dhcp_options[]={
+const char *dhcp_options[]={
 /*   0 */	"pad",
 /*   1 */	"Subnet mask",						/**/
 /*   2 */	"Time offset",						/**/
@@ -266,7 +266,7 @@ char *dhcp_options[]={
 /* 255 */	"End"};
 
 
-char *dhcp_message_types[]={
+const char *dhcp_message_types[]={
 		"wrong specified",
 /*   1 */	"DHCPDISCOVER",
 /*   2 */	"DHCPOFFER",
@@ -278,7 +278,7 @@ char *dhcp_message_types[]={
 /*   8 */	"DHCPINFORM"
 };
 
-char *netbios_node_type[]={
+const char *netbios_node_type[]={
 /* 0 */		"none",
 /* 1 */		"B-node",
 /* 2 */		"P-node",
@@ -290,24 +290,24 @@ char *netbios_node_type[]={
 /* 8 */		"H-node"
 };
 
-char *option_overload[]={
+const char *option_overload[]={
 /* 0 **/	"unspecified",
 /* 1 */		"file field holds options",
 /* 2 */		"sname field holds options",
 /* 3 */		"file and sname field holds options"
 };
 
-char *enabledisable[]={
+const char *enabledisable[]={
 /* 0 */		"disabled",
 /* 1 */		"enabled"
 };
 
-char *ethernet_encapsulation[]={
+const char *ethernet_encapsulation[]={
 /* 0 */		"Ethernet version 2",
 /* 1 */		"IEEE 802.3"
 };
 
-char *operands[]={
+const char *operands[]={
 /* 0 */		"wrong specified",
 /* 1 */		"BOOTPREQUEST",
 /* 2 */		"BOOTPREPLY"
@@ -316,7 +316,7 @@ char *operands[]={
 /*
  * From RFC 3046
  */
-char *relayagent_suboptions[]={
+const char *relayagent_suboptions[]={
 /* 0 */		"<unknown-0>",
 /* 1 */		"Circuit-ID",
 /* 2 */		"Remote-ID"
@@ -325,7 +325,7 @@ char *relayagent_suboptions[]={
 /*
  * Copied from RFC1700
  */
-char *htypes[]={
+const char *htypes[]={
 /*  0 */		"wrong specified",
 /*  1 */		"Ethernet",
 /*  2 */		"Experimental Ethernet",

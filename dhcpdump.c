@@ -5,7 +5,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.10 2003/11/07 13:04:49 mavetju Exp $
+// $Id: dhcpdump.c,v 1.11 2003/11/20 06:12:27 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -29,9 +29,6 @@
 
 #define uchar unsigned char
 
-uchar	buf[LARGESTRING];		// buffer from input line
-uchar	dummy[LARGESTRING];		// for not-needed information in scanf()
-
 // header variables
 uchar	timestamp[40];			// timestamp on header
 uchar	mac_origin[40];			// mac address of origin
@@ -40,19 +37,36 @@ uchar	ip_origin[40];			// ip address of origin
 uchar	ip_destination[40];		// ip address of destination
 int	max_data_len;			// maximum size of a packet
 
-// data variables
-uchar	data[LARGESTRING];		// data of the udp packet
-int	data_len=0;			// length of the packet
+int	tcpdump_style=-1;
 
 int check_ch(uchar *data,int data_len,regex_t *preg);
 int readheader(uchar *buf);
 int readdata(uchar *buf,uchar *data,int *data_len);
 int printdata(uchar *data,int data_len);
 
+void printIPaddress(uchar *data);
+void printIPaddressAddress(uchar *data);
+void printIPaddressMask(uchar *data);
+void print8bits(uchar *data);
+void print16bits(uchar *data);
+void print32bits(uchar *data);
+void printTime8(uchar *data);
+void printTime32(uchar *data);
+void printReqParmList(uchar *data,int len);
+void printHexColon(uchar *data,int len);
+void printHex(uchar *data,int len);
+void printHexString(uchar *data,int len);
+
 int main(int argc,char **argv) {
     char *hmask=NULL;
     regex_t preg;
     int i;
+
+    // data variables
+    uchar	data[LARGESTRING];		// data of the udp packet
+    int		data_len=0;			// length of the packet
+
+    uchar	buf[LARGESTRING];		// buffer from input line
 
     for (i=1;i<argc;i++) {
 	if (argv[i]==NULL || argv[i][0]!='-') break;
@@ -477,41 +491,100 @@ int printdata(uchar *data,int data_len) {
     return 0;
 }
 
+//
 // read the data of the packet, which is a bunch of hexdigits like:
 // ffff ffff 0043 0044 013f 2432 0201 0600.
+//
+// For tcpdump 3.8.3, it is:
+// 0x0110:  04c0 a801 0133 0400 0002 5801 04ff ffff  .....3....X.....
+//
 int readdata(uchar *buf,uchar *data,int *data_len) {
     int i,length;
     bool first=TRUE;
     int prev=0;
 
-    length=strlen(buf);
-    for (i=0;i<length;i++) {
-	if (buf[i]==' ') continue;
-	if (buf[i]=='\t') continue;
-	if (buf[i]=='\r') continue;
-	if (buf[i]=='\n') continue;
-	if (isxdigit(buf[i])) {
-	    if (buf[i]<='9') {
-		if (first) {
-		    prev=buf[i]-'0'; first=FALSE;
+    if (tcpdump_style==0) {
+	length=strlen(buf);
+	for (i=0;i<length;i++) {
+	    if (buf[i]==' ') continue;
+	    if (buf[i]=='\t') continue;
+	    if (buf[i]=='\r') continue;
+	    if (buf[i]=='\n') continue;
+
+	    if (isxdigit(buf[i])) {
+		if (buf[i]<='9') {
+		    if (first) {
+			prev=buf[i]-'0'; first=FALSE;
+		    } else {
+			data[(*data_len)++]=prev*16+buf[i]-'0'; first=TRUE;
+		    }
 		} else {
-		    data[(*data_len)++]=prev*16+buf[i]-'0'; first=TRUE;
+		    buf[i]=tolower(buf[i]);
+		    if (first) {
+			prev=buf[i]-'a'+10; first=FALSE;
+		    } else {
+			data[(*data_len)++]=prev*16+buf[i]-'a'+10; first=TRUE;
+		    }
 		}
-	    } else {
-		buf[i]=tolower(buf[i]);
-		if (first) {
-		    prev=buf[i]-'a'+10; first=FALSE;
-		} else {
-		    data[(*data_len)++]=prev*16+buf[i]-'a'+10; first=TRUE;
-		}
+		continue;
 	    }
-	    continue;
+	    fprintf(stderr,"Error in packet: offset: %d, character %c\n",i,buf[i]);
 	}
-	fprintf(stderr,"Error in packet: %c\n",buf[i]);
+
+	if (*data_len>=max_data_len)
+	    return 1;
     }
 
-    if (*data_len>=max_data_len)
-	return 1;
+    if (tcpdump_style==1) {
+	bool foundcolon=FALSE;
+	bool founddata=FALSE;
+	bool foundspace=FALSE;
+	int count=0;
+
+	length=strlen(buf);
+	for (i=0;i<length;i++) {
+	    if (buf[i]==' ') {
+		if (founddata && foundspace)
+		    foundcolon=FALSE;
+		else
+		    foundspace=TRUE;
+		continue;
+	    }
+	    foundspace=FALSE;
+	    if (buf[i]=='\t') continue;
+	    if (buf[i]=='\r') { count=0; continue; }
+	    if (buf[i]=='\n') { count=0; continue; }
+
+	    if (buf[i]==':') { foundcolon=TRUE; continue; }
+	    if (!foundcolon) continue;
+
+	    if (count==32) continue;
+
+	    if (isxdigit(buf[i])) {
+		if (buf[i]<='9') {
+		    if (first) {
+			prev=buf[i]-'0'; first=FALSE;
+		    } else {
+			data[(*data_len)++]=prev*16+buf[i]-'0'; first=TRUE;
+		    }
+		} else {
+		    buf[i]=tolower(buf[i]);
+		    if (first) {
+			prev=buf[i]-'a'+10; first=FALSE;
+		    } else {
+			data[(*data_len)++]=prev*16+buf[i]-'a'+10; first=TRUE;
+		    }
+		}
+		count++;
+		founddata++;
+		continue;
+	    }
+	    fprintf(stderr,"Error in packet: offset: %d, character %c\n",i,buf[i]);
+	}
+
+	if (*data_len>=max_data_len)
+	    return 1;
+    }
 
     return 0;
 }
@@ -525,42 +598,134 @@ int readdata(uchar *buf,uchar *data,int *data_len) {
 // field 5: length of IP packets + 14
 // field 6: ip address origin
 // field 8: ip address destination
-int readheader(uchar *buf) {
+//
+// tcpdump 3.8.3 has this as header:
+// 18:19:30.618569 00:0b:82:01:b5:e3 > ff:ff:ff:ff:ff:ff, ethertype IPv4 
+// (0x0800), length 342: IP 0.0.0.0.68 > 255.255.255.255.67: BOOTP/DHCP,
+// Request from 00:0b:82:01:b5:e3, length: 300
+// field 1: timestamp
+// field 2: mac address origin
+// field 4: mac address destination
+// field 9: length of IP packets + 14
+// field 11: ip address origin
+// field 13: ip address destination
+//
+//
+int readheader(uchar *lbuf) {
     int n;
     char **ap;
-    char *argv[10];
+    char *argv[16];
     char max_data_str[20];
 
-    for (ap=argv,n=0;(*ap=strsep((char **)&buf," \t"))!=NULL;n++)
-	if (**ap!='\0') {
-	    if (++ap>=&argv[10])
+    char *buf=(char *)lbuf;
+
+    if (tcpdump_style==-1) {
+	char *b=(char *)malloc(LARGESTRING);
+	strcpy(b,buf);
+	tcpdump_style=0;
+	for (ap=argv,n=0;(*ap=strsep(&b," \t"))!=NULL;n++) {
+	    if (n==2) {
+		if (ap[0][0]=='>') tcpdump_style=1;
 		break;
-	    switch(n) {
-		default:
-		    break;
-		case 0: 	// timestamp
-		    strcpy(timestamp,argv[0]);
-		    break;
-		case 1:	// mac origin
-		    strcpy(mac_origin,argv[1]);
-		    break;
-		case 2:	// mac destination
-		    strcpy(mac_destination,argv[2]);
-		    break;
-		case 4: // size of packet
-		    strcpy(max_data_str,argv[4]);
-		    max_data_str[strlen(max_data_str)-1]=0;
-		    max_data_len=atoi(max_data_str)-14; // note 2 *************
-		    break;
-		case 5:	// ip origin
-		    strcpy(ip_origin,argv[5]);
-		    break;
-		case 7:	// ip destination
-		    strcpy(ip_destination,argv[7]);
-		    ip_destination[strlen(ip_destination)-1]=0;
-		    break;
 	    }
 	}
+	if (tcpdump_style==0)
+	    fprintf(stderr,"Old-style tcpdump output\n");
+	if (tcpdump_style==1)
+	    fprintf(stderr,"TCPdump 3.8.x output\n");
+	// XXX yeah yeah *b is a memory leak.
+    }
 
-    return 0;
+    if (tcpdump_style==0) {
+	buf=(char *)lbuf;
+	for (ap=argv,n=0;(*ap=strsep(&buf," \t"))!=NULL;n++)
+	    if (**ap!='\0') {
+		if (++ap>=&argv[8])
+		    break;
+		switch(n) {
+		    default:
+			break;
+		    case 0: 	// timestamp
+			strcpy(timestamp,argv[0]);
+			break;
+		    case 1:	// mac origin
+			strcpy(mac_origin,argv[1]);
+			break;
+		    case 2:	// mac destination
+			strcpy(mac_destination,argv[2]);
+			break;
+		    case 4: // size of packet
+			strcpy(max_data_str,argv[4]);
+			max_data_str[strlen(max_data_str)-1]=0;
+			max_data_len=atoi(max_data_str)-14; // note 2 *************
+			break;
+		    case 5:	// ip origin
+			strcpy(ip_origin,argv[5]);
+			break;
+		    case 7:	// ip destination
+			strcpy(ip_destination,argv[7]);
+			ip_destination[strlen(ip_destination)-1]=0;
+			break;
+		}
+	    }
+	return 0;
+    }
+
+    if (tcpdump_style==1) {
+// tcpdump 3.8.3 has this as header:
+// 18:19:30.618569 00:0b:82:01:b5:e3 > ff:ff:ff:ff:ff:ff, ethertype IPv4 
+// (0x0800), length 342: IP 0.0.0.0.68 > 255.255.255.255.67: BOOTP/DHCP,
+// Request from 00:0b:82:01:b5:e3, length: 300
+// field 1: timestamp
+// field 2: mac address origin
+// field 4: mac address destination
+// field 9: length of IP packets + 14
+// field 11: ip address origin
+// field 13: ip address destination
+	buf=(char *)lbuf;
+	for (ap=argv,n=0;(*ap=strsep(&buf," \t"))!=NULL;n++) {
+//fprintf(stderr,"n: %d\n",n);
+	    if (**ap!='\0') {
+		if (++ap>=&argv[13])
+		    break;
+		switch(n) {
+		    default:
+			break;
+		    case 0: 	// timestamp
+			strcpy(timestamp,argv[0]);
+//fprintf(stderr,"timestamp: %s\n",timestamp);
+			break;
+		    case 1:	// mac origin
+			strcpy(mac_origin,argv[1]);
+//fprintf(stderr,"mac origin: %s\n",mac_origin);
+			break;
+		    case 3:	// mac destination
+			strcpy(mac_destination,argv[3]);
+			mac_destination[strlen(mac_destination)-1]=0;
+//fprintf(stderr,"mac destination: %s\n",mac_destination);
+			break;
+		    case 8: // size of packet
+			strcpy(max_data_str,argv[8]);
+			max_data_str[strlen(max_data_str)-1]=0;
+			max_data_len=atoi(max_data_str)-14; // note 2 *************
+//fprintf(stderr,"maxdatalen: %d\n",max_data_len);
+			break;
+		    case 10:	// ip origin
+			strcpy(ip_origin,argv[10]);
+//fprintf(stderr,"ip origin: %s\n",ip_origin);
+			break;
+		    case 12:	// ip destination
+			strcpy(ip_destination,argv[12]);
+			ip_destination[strlen(ip_destination)-1]=0;
+//fprintf(stderr,"ip destination: %s\n",ip_destination);
+			break;
+		}
+	    }
+	}
+//fprintf(stderr,"%d\n",n);
+	return 0;
+    }
+
+    return 1;
+
 }
