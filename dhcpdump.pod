@@ -1,33 +1,34 @@
-.\" $Id: dhcpdump.1,v 1.1 2001/08/24 00:44:16 mavetju Exp $
-.Dd April 18, 2001
-.Dt DHCPDUMP 1
-.Os ???
-.Sh NAME
-.Nm dhcpdump
-.Nd
-DHCP packet dumper
+#
+# $Id$
+#
 
-.Sh SYNOPSIS
-.Nm
-.Op Fl h Ar regular-expression
+=head1 NAME
 
-.Sh DESCRIPTION
-This command parses the output of tcpdump to display the dhcp-packets
-for easier checking and debugging.
+B<dhcpdump> - DHCP packet dumper
 
-.Sh USAGE
-tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump
+=head1 SYNOPSIS
 
-If you want to filter a specific Client Hardware Address (CHADDR),
-then you can specifiy it as a regular expressions:
+B<dhcpdump> [B<-h> I<regular-expression>]
 
-tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump -h ^00:c0:4f
+=head1 DESCRIPTION
+
+This command parses the output of tcpdump to display the dhcp-packets for
+easier checking and debugging.
+
+=head1 USAGE
+
+S<tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump>
+
+If you want to filter a specific Client Hardware Address (CHADDR), then
+you can specifiy it as a regular expressions:
+
+S<tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump -h ^00:c0:4f>
 
 This will display only the packets with Client Hardware Addresses
 which start with 00:c0:4f.
 
-.Sh OUTPUT
-.nf
+=head1 OUTPUT
+
   TIME: 15:45:02.084272
     IP: 0.0.0.0.68 (0:c0:4f:82:ac:7f) > 255.255.255.255.67 (ff:ff:ff:ff:ff:ff)
     OP: 1 (BOOTPREQUEST)
@@ -51,32 +52,39 @@ OPTION:  55 (  7) Parameter Request List      1 (Subnet mask)
                                               3 (Routers)
                                              58 (T1)
                                              59 (T2)
-.fi
 
 At the option field, the first field is the value of the option,
 the second one (between brackets) is the length of the option-datafield,
 the third field is the name of the option, the fourth field is the
 data of the option.
 
-.Sh RETURN VALUES
+=head1 RETURN VALUES
+
 Always 0.
 
-.Sh NOTES
+=head1 NOTES
+
 Privileged access is often needed for tcpdump.
 
-.Sh BUGS
-Not all the parameter options are printed verbose, because of lack
-of documentation. Not all the options are tested, because of lack
-of clients/servers with these options.
 
-.Sh THANKS TO
+=head1 BUGS
+
+Not all the parameter options are printed verbose, because of lack of
+documentation. Not all the options are tested, because of lack of
+clients/servers with these options.
+
+
+=head1 THANKS TO
+
 Ralph Droms and Ted Lemons "The DHCP Handbook", ISBN 1-57870-137-6.
 
 Peter Apian-Bennewitz <apian@ise.fhg.de> for his Client Hardware
 Address filtering
 
-.Sh AUTHOR
+=head1 AUTHOR
+
 Edwin Groothuis, edwin@mavetju.org (http://www.mavetju.org)
 
-.Sh SEE ALSO
+=head1 SEE ALSO
+
 dhcpd(8), tcpdump(1), RFC2132
