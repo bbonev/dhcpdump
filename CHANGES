@@ -1,6 +1,8 @@
-$Id: CHANGES,v 1.1 2001/08/24 00:44:16 mavetju Exp $
+$Id: CHANGES,v 1.2 2001/08/28 06:13:10 mavetju Exp $
 
 version 1.3
+	- added chaddr filter, contributed by Peter Apian-Bennewitz
+	  <apian@ise.fhg.de>
 	- client-identifier is now printed as long as it is.
 	  (bug anton.holleman@nominum.com)
 

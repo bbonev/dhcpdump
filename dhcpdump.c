@@ -6,7 +6,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.1 2001/08/24 00:44:16 mavetju Exp $
+// $Id: dhcpdump.c,v 1.2 2001/08/28 06:13:10 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <regex.h>
 #include "dhcp_options.h"
 
 #define bool int
@@ -39,11 +40,29 @@ int	max_data_len;			// maximum size of a packet
 uchar	data[LARGESTRING];		// data of the udp packet
 int	data_len=0;			// length of the packet
 
+int check_ch(uchar *data,int data_len,regex_t *preg);
 int readheader(uchar *buf);
 int readdata(uchar *buf,uchar *data,int *data_len);
 int printdata(uchar *data,int data_len);
 
 int main(int argc,char **argv) {
+    char *hmask=NULL;
+    regex_t preg;
+    int i;
+
+    for (i=1;i<argc;i++) {
+	if (argv[i]==NULL || argv[i][0]!='-') break;
+	switch (argv[i][1]) {
+	case 'h':
+	    hmask=argv[++i];
+	    break;
+	default:
+	    fprintf(stderr,"%s: %c: uknown option\n",argv[0],argv[i][1]);
+	    exit(2);
+	}
+    }
+
+    if (hmask) regcomp(&preg,hmask,REG_EXTENDED | REG_ICASE | REG_NOSUB);
 
     while (!feof(stdin)) {
 	if (fgets(buf,LARGESTRING,stdin)==NULL)
@@ -61,11 +80,26 @@ int main(int argc,char **argv) {
 	    readheader(buf);
 	    data_len=0;
 	} else {
-	    if (readdata(buf,data,&data_len)==1)
+	    if (readdata(buf,data,&data_len)==1
+	    &&  ( !hmask || !check_ch(data,data_len,&preg)))
 		printdata(data,data_len);
 	}
     }
     return 0;
+}
+
+// check for matching CHADDR (Peter Apian-Bennewitz <apian@ise.fhg.de>)
+int check_ch(uchar *data,int data_len,regex_t *preg) {
+    char ch_ip[50];
+
+    if (data_len<43) return(0);
+    sprintf(ch_ip,
+	"%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n",
+           data[28],data[29],data[30],data[31],
+           data[32],data[33],data[34],data[35],
+           data[36],data[37],data[38],data[39],
+           data[40],data[41],data[42],data[43]);
+   return (regexec(preg,ch_ip,0,NULL,0));
 }
 
 

@@ -1,4 +1,4 @@
-.\" $Id: dhcpdump.1,v 1.2 2001/03/01 15:02:27 edwin Exp $
+.\" $Id: dhcpdump.1,v 1.1 2001/08/24 00:44:16 mavetju Exp $
 .Dd April 18, 2001
 .Dt DHCPDUMP 1
 .Os ???
@@ -8,8 +8,8 @@
 DHCP packet dumper
 
 .Sh SYNOPSIS
-.Nm dhcpdump
-.Op Ar command
+.Nm
+.Op Fl h Ar regular-expression
 
 .Sh DESCRIPTION
 This command parses the output of tcpdump to display the dhcp-packets
@@ -17,6 +17,14 @@ for easier checking and debugging.
 
 .Sh USAGE
 tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump
+
+If you want to filter a specific Client Hardware Address (CHADDR),
+then you can specifiy it as a regular expressions:
+
+tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump -h ^00:c0:4f
+
+This will display only the packets with Client Hardware Addresses
+which start with 00:c0:4f.
 
 .Sh OUTPUT
 .nf
@@ -41,8 +49,8 @@ OPTION:  54 (  4) Server identifier         130.139.64.101
 OPTION:  50 (  4) Request IP address        130.139.64.143
 OPTION:  55 (  7) Parameter Request List      1 (Subnet mask)
                                               3 (Routers)
-					     58 (T1)
-					     59 (T2)
+                                             58 (T1)
+                                             59 (T2)
 .fi
 
 At the option field, the first field is the value of the option,
@@ -57,12 +65,15 @@ Always 0.
 Privileged access is often needed for tcpdump.
 
 .Sh BUGS
-Not all the options are printed verbose, because of lack of
-documentation. Not all the options are tested, because of lack of
-clients/servers with these options.
+Not all the parameter options are printed verbose, because of lack
+of documentation. Not all the options are tested, because of lack
+of clients/servers with these options.
 
 .Sh THANKS TO
 Ralph Droms and Ted Lemons "The DHCP Handbook", ISBN 1-57870-137-6.
+
+Peter Apian-Bennewitz <apian@ise.fhg.de> for his Client Hardware
+Address filtering
 
 .Sh AUTHOR
 Edwin Groothuis, edwin@mavetju.org (http://www.mavetju.org)
