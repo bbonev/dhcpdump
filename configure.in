@@ -1,0 +1,37 @@
+dnl
+dnl dhcpdump configure.in. Scary... very scary.
+dnl
+
+AC_INIT(dhcpdump.c)
+AM_CONFIG_HEADER(config.h)
+
+AC_PROG_CC
+AC_PROG_INSTALL
+
+dnl
+dnl some function sunos/solaris does't have
+dnl
+AC_CANONICAL_SYSTEM
+case "$target_os" in
+sunos*)
+	AC_CHECK_FUNCS(strsep,AC_DEFINE(HAVE_STRSEP))
+	OS_OPT=
+	AC_SUBST(OS_OPT)
+	;;
+solaris*)
+	AC_CHECK_FUNCS(strsep,AC_DEFINE(HAVE_STRSEP))
+	OS_OPT=
+	AC_SUBST(OS_OPT)
+	;;
+esac
+
+AM_INIT_AUTOMAKE(dhcpdump, 1.4)
+
+AC_HEADER_STDC
+AC_HEADER_TIME
+AC_CHECK_HEADERS([stdlib.h string.h])
+
+AC_CHECK_FUNCS([regcomp])
+
+
+AC_OUTPUT(Makefile)

@@ -6,7 +6,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.2 2001/08/28 06:13:10 mavetju Exp $
+// $Id: dhcpdump.c,v 1.3 2001/08/28 06:48:15 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -15,7 +15,12 @@
 #include <string.h>
 #include <ctype.h>
 #include <regex.h>
+#include "config.h"
 #include "dhcp_options.h"
+
+#ifndef HAVE_STRSEP
+#include "strsep.c"
+#endif
 
 #define bool int
 #define TRUE (1)
