@@ -5,7 +5,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.6 2002/11/04 09:41:28 mavetju Exp $
+// $Id: dhcpdump.c,v 1.7 2003/01/21 10:33:31 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -434,6 +434,7 @@ int printdata(uchar *data,int data_len) {
 	    strncpy(buf,&data[j+5],data[j+1]-3);
 	    buf[data[j+1-3]]=0;
 	    printf("%s",buf);
+	    break;
 
 	case 82:	// Relay Agent Information
 	    printf("\n");
