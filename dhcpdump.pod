@@ -1,5 +1,5 @@
 #
-# $Id: dhcpdump.pod,v 1.1 2001/12/02 07:22:37 mavetju Exp $
+# $Id: dhcpdump.pod,v 1.2 2002/11/04 09:41:28 mavetju Exp $
 #
 
 =head1 NAME
@@ -65,7 +65,6 @@ Always 0.
 =head1 NOTES
 
 Privileged access is often needed for tcpdump.
-
 
 =head1 BUGS
 

@@ -5,4 +5,4 @@ man_MANS = dhcpdump.1
 dhcpdump.1: dhcpdump.pod
 	$(PERL2MAN_RULE)
 PERL2MAN_RULE = \
-	pod2man --release="January 21, 2003" --date="January 21, 2002" --center="General Commands Manual" --section=1 $? > $@
+	pod2man --release="November 21, 2003" --date="November 21, 2003" --center="General Commands Manual" --section=1 $? > $@
