@@ -1,7 +1,8 @@
-$Id: CHANGES,v 1.7 2002/11/04 09:41:28 mavetju Exp $
+$Id: CHANGES,v 1.8 2003/01/21 10:33:31 mavetju Exp $
 
 version 1.5.1
 	- Option 82, submitted by Phil Pennock <pdp@nl.demon.net>
+	- Add fflush(), submitted by Gary Colman <gary@colmans.net>
 
 version 1.5
 	- better input checking regarding validity of the header
