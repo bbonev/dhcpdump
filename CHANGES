@@ -1,8 +1,9 @@
-$Id: CHANGES,v 1.3 2001/08/28 06:48:15 mavetju Exp $
+$Id: CHANGES,v 1.4 2002/01/26 13:19:04 mavetju Exp $
 
 version 1.4
 	- added auto-configure script
 	- fixed problem with strsep() under Solaris
+	- added FILES, CONTACT
 
 version 1.3
 	- added chaddr filter, contributed by Peter Apian-Bennewitz

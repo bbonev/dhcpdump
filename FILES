@@ -1,0 +1,26 @@
+$Id$
+
+General
+-------
+CHANGES			- Change log
+CONTACT			- How to contact me
+FILES			- This file
+LICENSE			- License under which this software is distributed
+
+Auto-configuration
+------------------
+Makefile.am		- My Makefile-template
+configure.in		- My configure-template
+depcomp			- (Needed by configure)
+install-sh		- (Needed by configure)
+missing			- (Needed by configure)
+mkinstalldirs		- (Needed by configure)
+
+Source-files
+------------
+dhcpdump.1		- Man-page, obtained from dhcpdump.pod
+dhcp_options.h		- Tables with dhcp-packet-field values and their
+			  readable descriptions
+dhcpdump.c		- The source-file
+dhcpdump.pod		- The original man-file
+strsep.c		- SunOS/Solaris doesn't have strsep
