@@ -1,0 +1,71 @@
+.\" $Id: dhcpdump.1,v 1.2 2001/03/01 15:02:27 edwin Exp $
+.Dd April 18, 2001
+.Dt DHCPDUMP 1
+.Os ???
+.Sh NAME
+.Nm dhcpdump
+.Nd
+DHCP packet dumper
+
+.Sh SYNOPSIS
+.Nm dhcpdump
+.Op Ar command
+
+.Sh DESCRIPTION
+This command parses the output of tcpdump to display the dhcp-packets
+for easier checking and debugging.
+
+.Sh USAGE
+tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump
+
+.Sh OUTPUT
+.nf
+  TIME: 15:45:02.084272
+    IP: 0.0.0.0.68 (0:c0:4f:82:ac:7f) > 255.255.255.255.67 (ff:ff:ff:ff:ff:ff)
+    OP: 1 (BOOTPREQUEST)
+ HTYPE: 1 (Ethernet)
+  HLEN: 6
+  HOPS: 0
+   XID: 28f61b03
+  SECS: 0
+ FLAGS: 0
+CIADDR: 0.0.0.0
+YIADDR: 0.0.0.0
+SIADDR: 0.0.0.0
+GIADDR: 0.0.0.0
+CHADDR: 00:c0:4f:82:ac:7f:00:00:00:00:00:00:00:00:00:00
+ SNAME: .
+ FNAME: .
+OPTION:  53 (  1) DHCP message type         3 (DHCPREQUEST)
+OPTION:  54 (  4) Server identifier         130.139.64.101
+OPTION:  50 (  4) Request IP address        130.139.64.143
+OPTION:  55 (  7) Parameter Request List      1 (Subnet mask)
+                                              3 (Routers)
+					     58 (T1)
+					     59 (T2)
+.fi
+
+At the option field, the first field is the value of the option,
+the second one (between brackets) is the length of the option-datafield,
+the third field is the name of the option, the fourth field is the
+data of the option.
+
+.Sh RETURN VALUES
+Always 0.
+
+.Sh NOTES
+Privileged access is often needed for tcpdump.
+
+.Sh BUGS
+Not all the options are printed verbose, because of lack of
+documentation. Not all the options are tested, because of lack of
+clients/servers with these options.
+
+.Sh THANKS TO
+Ralph Droms and Ted Lemons "The DHCP Handbook", ISBN 1-57870-137-6.
+
+.Sh AUTHOR
+Edwin Groothuis, edwin@mavetju.org (http://www.mavetju.org)
+
+.Sh SEE ALSO
+dhcpd(8), tcpdump(1), RFC2132

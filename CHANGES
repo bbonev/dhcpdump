@@ -1,0 +1,17 @@
+$Id$
+
+version 1.2
+	- forgot to update the man-page.
+
+version 1.1
+	- Sometimes, specially with bootp-packets, the option-packet
+	  would contain rubbish data which dhcpdump tried to parse.
+	  And that caused an overflow in the arrays, which caused
+	  a segfault.
+	- Added more tables so the numerical values of fields (like
+	  network type, requested parameter list) are not only
+	  numeric anymore.
+	- Better layout of hex-strings.
+
+version 1.0
+	- Initial release
