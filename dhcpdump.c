@@ -5,7 +5,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.5 2002/07/11 11:29:35 mavetju Exp $
+// $Id: dhcpdump.c,v 1.6 2002/11/04 09:41:28 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -434,6 +434,23 @@ int printdata(uchar *data,int data_len) {
 	    strncpy(buf,&data[j+5],data[j+1]-3);
 	    buf[data[j+1-3]]=0;
 	    printf("%s",buf);
+
+	case 82:	// Relay Agent Information
+	    printf("\n");
+	    for (i=j+2;i<j+data[j+1];) {
+		printf("%-17s %-13s ", " ",
+		    data[i]>sizeof(relayagent_suboptions)?
+		    "*wrong value*":
+		    relayagent_suboptions[data[i]]);
+		if (i+data[i+1]>j+data[j+1]) {
+		    printf("*MALFORMED -- TOO LARGE*\n");
+		    break;
+		}
+		printHexColon(data+i+2,data[i+1]);
+		i+=data[i+1];
+	    }
+	    break;
+
 	}
 	printf("\n");
 

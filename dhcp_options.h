@@ -1,5 +1,5 @@
 //
-// $Id: dhcp_options.h,v 1.1 2001/08/24 00:44:16 mavetju Exp $
+// $Id: dhcp_options.h,v 1.2 2002/11/04 09:41:28 mavetju Exp $
 //
 
 //
@@ -311,6 +311,15 @@ char *operands[]={
 /* 0 */		"wrong specified",
 /* 1 */		"BOOTPREQUEST",
 /* 2 */		"BOOTPREPLY"
+};
+
+/*
+ * From RFC 3046
+ */
+char *relayagent_suboptions[]={
+/* 0 */		"<unknown-0>",
+/* 1 */		"Circuit-ID",
+/* 2 */		"Remote-ID"
 };
 
 /*
