@@ -1,5 +1,5 @@
 #
-# $Id$
+# $Id: dhcpdump.pod,v 1.1 2001/12/02 07:22:37 mavetju Exp $
 #
 
 =head1 NAME
@@ -71,8 +71,8 @@ Privileged access is often needed for tcpdump.
 
 Not all the parameter options are printed verbose, because of lack of
 documentation. Not all the options are tested, because of lack of
-clients/servers with these options.
-
+clients/servers with these options. If you have a dump of one of
+them, please send them to me and I'll incorperate them.
 
 =head1 THANKS TO
 

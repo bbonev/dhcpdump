@@ -1,8 +1,11 @@
-$Id: CHANGES,v 1.5 2002/01/26 14:18:18 mavetju Exp $
+$Id: CHANGES,v 1.6 2002/07/11 11:29:35 mavetju Exp $
 
 version 1.5
 	- better input checking regarding validity of the header
 	  of the UDP packet (bug anton.holleman@nominum.com)
+	- Added some DHCP options I found on the INIA website.
+	  I can't parse all of them yet since I'm not sure how they
+	  look like.
 
 version 1.4
 	- added auto-configure script

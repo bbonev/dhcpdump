@@ -1,4 +1,3 @@
-//
 // DHCPDUMP
 //
 // Usage: tcpdump -s 1518 -lenx port bootps or port bootpc | dhcpdump
@@ -6,7 +5,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id: dhcpdump.c,v 1.4 2002/01/26 13:19:04 mavetju Exp $
+// $Id: dhcpdump.c,v 1.5 2002/07/11 11:29:35 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -424,6 +423,17 @@ int printdata(uchar *data,int data_len) {
 	case 61:	// Client identifier
 	    printHexColon(data+j+2,data[j+1]);
 	    break;
+
+	case 81:	// Client FQDN
+	    print8bits(data+j+2);
+	    printf("-");
+	    print8bits(data+j+3);
+	    printf("-");
+	    print8bits(data+j+4);
+	    printf(" ");
+	    strncpy(buf,&data[j+5],data[j+1]-3);
+	    buf[data[j+1-3]]=0;
+	    printf("%s",buf);
 	}
 	printf("\n");
 
