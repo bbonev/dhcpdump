@@ -11,19 +11,7 @@ AC_PROG_INSTALL
 dnl
 dnl some function sunos/solaris does't have
 dnl
-AC_CANONICAL_SYSTEM
-case "$target_os" in
-sunos*)
-	AC_CHECK_FUNCS(strsep,AC_DEFINE(HAVE_STRSEP))
-	OS_OPT=
-	AC_SUBST(OS_OPT)
-	;;
-solaris*)
-	AC_CHECK_FUNCS(strsep,AC_DEFINE(HAVE_STRSEP))
-	OS_OPT=
-	AC_SUBST(OS_OPT)
-	;;
-esac
+AC_CHECK_FUNCS(strsep,AC_DEFINE(HAVE_STRSEP))
 
 AM_INIT_AUTOMAKE(dhcpdump, 1.4)
 
