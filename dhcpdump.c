@@ -6,7 +6,7 @@
 // note 1: how does this work for FDDI / PPP links?
 // note 2: what is this number 14?
 //
-// $Id$
+// $Id: dhcpdump.c,v 1.1 2001/08/24 00:44:16 mavetju Exp $
 //
 
 #include <sys/types.h>
@@ -162,6 +162,16 @@ void printHex(uchar *data,int len) {
     }
 }
 
+// print the data as a hex-list seperated by colons
+void printHexColon(uchar *data,int len) {
+    int i;
+
+    for (i=0;i<len;i++) {
+	if (i!=0) printf(":");
+	printf("%02x",data[i]);
+    }
+}
+
 // print the list of requested parameters
 void printReqParmList(uchar *data,int len) {
     int i;
@@ -183,33 +193,25 @@ int printdata(uchar *data,int data_len) {
     // Skip the ethernet header. Is there a way to do this better?
     data+=28;	// note 1
 
-    printf("  TIME: %s\n",timestamp);
-    printf("    IP: %s (%s) > %s (%s)\n",
+    printf(  "  TIME: %s\n",timestamp);
+    printf(  "    IP: %s (%s) > %s (%s)\n",
 	ip_origin,mac_origin,ip_destination,mac_destination);
-    printf("    OP: %d (%s)\n",data[0],operands[data[0]]);
-    printf(" HTYPE: %d (%s)\n",data[1],htypes[data[1]]);
-    printf("  HLEN: %d\n",data[2]);
-    printf("  HOPS: %d\n",data[3]);
-    printf("   XID: %02x%02x%02x%02x\n",
+    printf(  "    OP: %d (%s)\n",data[0],operands[data[0]]);
+    printf(  " HTYPE: %d (%s)\n",data[1],htypes[data[1]]);
+    printf(  "  HLEN: %d\n",data[2]);
+    printf(  "  HOPS: %d\n",data[3]);
+    printf(  "   XID: %02x%02x%02x%02x\n",
 	data[4],data[5],data[6],data[7]);
-    printf("  SECS: %d\n",255*data[8]+data[9]);
-    printf(" FLAGS: %x\n",255*data[10]+data[11]);
+    printf(  "  SECS: ");print16bits(data+8);//,255*data[8]+data[9]);
+    printf("\n FLAGS: %x\n",255*data[10]+data[11]);
 
-    printf("CIADDR: %d.%d.%d.%d\n",
-	    data[12],data[13],data[14],data[15]);
-    printf("YIADDR: %d.%d.%d.%d\n",
-	    data[16],data[17],data[18],data[19]);
-    printf("SIADDR: %d.%d.%d.%d\n",
-	    data[20],data[21],data[22],data[23]);
-    printf("GIADDR: %d.%d.%d.%d\n",
-	    data[24],data[25],data[26],data[27]);
-    printf("CHADDR: %02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x:%02x\n",
-	    data[28],data[29],data[30],data[31],
-	    data[32],data[33],data[34],data[35],
-	    data[36],data[37],data[38],data[39],
-	    data[40],data[41],data[42],data[43]);
-    printf(" SNAME: %s.\n",data+44);
-    printf(" FNAME: %s.\n",data+108);
+    printf(  "CIADDR: ");printIPaddress(data+12);
+    printf("\nYIADDR: ");printIPaddress(data+16);
+    printf("\nSIADDR: ");printIPaddress(data+20);
+    printf("\nGIADDR: ");printIPaddress(data+24);
+    printf("\nCHADDR: ");printHexColon(data+28,16);
+    printf("\n SNAME: %s.\n",data+44);
+    printf(  " FNAME: %s.\n",data+108);
 
     j=236;
     j+=4;	/* cookie */
@@ -381,9 +383,7 @@ int printdata(uchar *data,int data_len) {
 	    break;
 
 	case 61:	// Client identifier
-	    printf("%02x%02x%02x%02x%02x%02x",
-		data[j+2],data[j+3],data[j+4],
-		data[j+5],data[j+6],data[j+7]);
+	    printHexColon(data+j+2,data[j+1]);
 	    break;
 	}
 	printf("\n");
