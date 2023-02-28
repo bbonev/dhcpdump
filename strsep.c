@@ -1,5 +1,5 @@
 //
-// $Id$
+// $Id: strsep.c,v 1.1 2002/01/26 13:19:04 mavetju Exp $
 //
 // strsep() for Solaris, which doesn't have it by default.
 //

@@ -1,5 +1,5 @@
 #
-# $Id: dhcpdump.pod,v 1.2 2002/11/04 09:41:28 mavetju Exp $
+# $Id: dhcpdump.pod,v 1.3 2003/11/20 11:52:59 mavetju Exp $
 #
 
 =head1 NAME
@@ -8,7 +8,7 @@ B<dhcpdump> - DHCP packet dumper
 
 =head1 SYNOPSIS
 
-B<dhcpdump> [B<-h> I<regular-expression>]
+B<dhcpdump> [B<-h> I<regular-expression>] B<-i> I<interface>
 
 =head1 DESCRIPTION
 
@@ -17,12 +17,12 @@ easier checking and debugging.
 
 =head1 USAGE
 
-S<tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump>
+S<dhcpdump -i /dev/fxp0>
 
 If you want to filter a specific Client Hardware Address (CHADDR), then
 you can specifiy it as a regular expressions:
 
-S<tcpdump -lenx -s 1500 port bootps or port bootpc | dhcpdump -h ^00:c0:4f>
+S<dhcpdump -i /dev/fxp0 -h ^00:c0:4f>
 
 This will display only the packets with Client Hardware Addresses
 which start with 00:c0:4f.
@@ -64,7 +64,7 @@ Always 0.
 
 =head1 NOTES
 
-Privileged access is often needed for tcpdump.
+Privileged access is often needed for accessing the interface.
 
 =head1 BUGS
 
