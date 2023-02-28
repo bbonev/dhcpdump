@@ -1,26 +1,16 @@
-$Id: FILES,v 1.1 2002/01/26 14:18:18 mavetju Exp $
-
 General
 -------
-CHANGES			- Change log
-CONTACT			- How to contact me
 FILES			- This file
+README.md		- Current information about the project
 LICENSE			- License under which this software is distributed
-
-Auto-configuration
-------------------
-Makefile.am		- My Makefile-template
-configure.in		- My configure-template
-depcomp			- (Needed by configure)
-install-sh		- (Needed by configure)
-missing			- (Needed by configure)
-mkinstalldirs		- (Needed by configure)
+CHANGES			- Old change log
+CONTACT			- Original author contact information
 
 Source-files
 ------------
 dhcpdump.1		- Man-page, obtained from dhcpdump.pod
-dhcp_options.h		- Tables with dhcp-packet-field values and their
-			  readable descriptions
+dhcp_options.h	- Tables with dhcp-packet-field values and their
+				  readable descriptions
 dhcpdump.c		- The source-file
-dhcpdump.pod		- The original man-file
-strsep.c		- SunOS/Solaris doesn't have strsep
+dhcpdump.pod	- The original man-file
+Makefile		- make build rules
