@@ -12,7 +12,7 @@ B<dhcpdump> [B<-h> I<regular-expression>] B<-i> I<interface>
 
 =head1 DESCRIPTION
 
-This command parses the output of tcpdump to display the dhcp-packets for
+This command listens on a network interface to display the dhcp-packets for
 easier checking and debugging.
 
 =head1 USAGE
@@ -20,7 +20,7 @@ easier checking and debugging.
 S<dhcpdump -i /dev/fxp0>
 
 If you want to filter a specific Client Hardware Address (CHADDR), then
-you can specifiy it as a regular expressions:
+you can specify it as a regular expressions:
 
 S<dhcpdump -i /dev/fxp0 -h ^00:c0:4f>
 
@@ -71,7 +71,7 @@ Privileged access is often needed for accessing the interface.
 Not all the parameter options are printed verbose, because of lack of
 documentation. Not all the options are tested, because of lack of
 clients/servers with these options. If you have a dump of one of
-them, please send them to me and I'll incorperate them.
+them, please send them to me and I'll incorporate them.
 
 =head1 THANKS TO
 

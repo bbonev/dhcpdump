@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
 			interface = argv[++i];
 			break;
 		default:
-			fprintf(stderr, "%s: %c: uknown option\n",
+			fprintf(stderr, "%s: %c: unknown option\n",
 			    argv[0], argv[i][1]);
 			usage();
 		}
@@ -290,7 +290,7 @@ void printHex(u_char *data, int len) {
 	}
 }
 
-// print the data as a hex-list seperated by colons
+// print the data as a hex-list separated by colons
 void printHexColon(u_char *data, int len) {
 	int i;
 

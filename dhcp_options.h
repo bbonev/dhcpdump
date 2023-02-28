@@ -118,7 +118,7 @@ const char *dhcp_options[] = {
 /* 107 */	"???",
 /* 108 */	"Swap Path",
 /* 109 */	"???",
-/* 110 */	"IPX Compatability",
+/* 110 */	"IPX Compatibility",
 /* 111 */	"???",
 /* 112 */	"Netinfo Address",
 /* 113 */	"Netinfo Tag",
