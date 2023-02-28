@@ -37,6 +37,8 @@
 
 #define LARGESTRING 1024
 
+#define strcountof(x) (sizeof(x)/sizeof(*(x)))
+
 // header variables
 u_char	timestamp[40];			// timestamp on header
 u_char	mac_origin[40];			// mac address of origin
@@ -470,7 +472,7 @@ int printdata(u_char *data, int data_len) {
 	case 36:	// Ethernet encapsulation
 		printf("%d (%s)",
 		    data[j + 2],
-		    data[j +2 ] > sizeof(ethernet_encapsulation) ?
+		    data[j +2 ] > strcountof(ethernet_encapsulation) ?
 			"*wrong value*" :
 			ethernet_encapsulation[data[j + 2]]);
 		break;
@@ -478,7 +480,7 @@ int printdata(u_char *data, int data_len) {
 	case 52:	// Option overload
 		printf("%d (%s)",
 		    data[j + 2],
-		    data[j + 2] > sizeof(option_overload) ?
+		    data[j + 2] > strcountof(option_overload) ?
 			"*wrong value*" :
 			option_overload[data[j + 2]]);
 		break;
@@ -486,7 +488,7 @@ int printdata(u_char *data, int data_len) {
 	case 53:	// DHCP message type
 		printf("%d (%s)",
 		    data[j + 2],
-		    data[j + 2] > sizeof(dhcp_message_types) ?
+		    data[j + 2] > strcountof(dhcp_message_types) ?
 			"*wrong value*" :
 			dhcp_message_types[data[j + 2]]);
 		break;
@@ -518,7 +520,7 @@ int printdata(u_char *data, int data_len) {
 	case 82:	// Relay Agent Information
 		for (i = j + 2; i < j + data[j + 1] + 2; ) {
 			printf("\n%-17s %-13s ", " ",
-			    data[i] > sizeof(relayagent_suboptions) ?
+			    data[i] > strcountof(relayagent_suboptions) ?
 			    "*wrong value*" :
 			    relayagent_suboptions[data[i]]);
 			if (i + data[i + 1] + 2 > j + data[j + 1] + 2) {
