@@ -316,7 +316,7 @@ int printdata(u_char *data, int data_len) {
 	printf(  "   XID: %02x%02x%02x%02x\n",
 	    data[4], data[5], data[6], data[7]);
 	printf(  "  SECS: "); print16bits(data + 8);
-	printf("\n FLAGS: %x\n", 255 * data[10] + data[11]);
+	printf("\n FLAGS: %x\n", 256 * data[10] + data[11]);
 
 	printf(  "CIADDR: "); printIPaddress(data + 12);
 	printf("\nYIADDR: "); printIPaddress(data + 16);
