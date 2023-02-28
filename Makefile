@@ -1,4 +1,5 @@
-CFLAGS+=${CPPFLAGS} -Wall -g
+CFLAGS+=${CPPFLAGS}
+CFLAGS+=-Wall -Wextra -g
 LDFLAGS+=-g
 LIBS+=-lpcap
 
