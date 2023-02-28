@@ -1,6 +1,6 @@
-CFLAGS += $(CPPFLAGS) -Wall -g
-LDFLAGS += -g
-LIBS += -lpcap
+CFLAGS+=${CPPFLAGS} -Wall -g
+LDFLAGS+=-g
+LIBS+=-lpcap
 
 all: dhcpdump dhcpdump.8
 
