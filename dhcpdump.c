@@ -132,8 +132,8 @@ void pcap_callback(u_char *user, const struct pcap_pkthdr *h, const u_char *sp) 
 	offset += ETHER_HDR_LEN;
 
 	// Check for IPv4 packets
-	if (eh->ether_type != 8) { 
-		printf("Ignored non IPv4 packet: %d\n", eh->ether_type);
+	if (eh->ether_type != htons(0x800)) { 
+		printf("Ignored non IPv4 packet: %x\n", ntohs(eh->ether_type));
 		return;
 	}
 
