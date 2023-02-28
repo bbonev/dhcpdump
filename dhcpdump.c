@@ -16,11 +16,13 @@
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <netinet/udp.h>
+#include <netinet/ether.h>
 #include <arpa/inet.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <time.h>
 #include <pcap.h>
 #include <err.h>
 #include <regex.h>
@@ -40,11 +42,11 @@
 #define strcountof(x) (sizeof(x)/sizeof(*(x)))
 
 // header variables
-u_char	timestamp[40];			// timestamp on header
-u_char	mac_origin[40];			// mac address of origin
-u_char	mac_destination[40];		// mac address of destination
-u_char	ip_origin[40];			// ip address of origin
-u_char	ip_destination[40];		// ip address of destination
+char	timestamp[40];			// timestamp on header
+char	mac_origin[40];			// mac address of origin
+char	mac_destination[40];		// mac address of destination
+char	ip_origin[40];			// ip address of origin
+char	ip_destination[40];		// ip address of destination
 int	max_data_len;			// maximum size of a packet
 
 int	tcpdump_style = -1;
@@ -162,13 +164,21 @@ void pcap_callback(u_char *user, const struct pcap_pkthdr *h, const u_char *sp) 
 	strcpy(mac_destination,
 	    ether_ntoa((struct ether_addr *)eh->ether_dhost));
 
-	strcpy(ip_origin, (u_char *)inet_ntoa(ip->ip_src));
-	strcpy(ip_destination, (u_char *)inet_ntoa(ip->ip_dst));
+	strcpy(ip_origin, (char *)inet_ntoa(ip->ip_src));
+	strcpy(ip_destination, (char *)inet_ntoa(ip->ip_dst));
 
+#ifdef __linux__
+	if (hmask && check_ch((u_char *)(sp + offset), ntohs(udp->len)))
+		return;
+
+	printdata((u_char *)(sp + offset), ntohs(udp->len));
+#else
 	if (hmask && check_ch((u_char *)(sp + offset), ntohs(udp->uh_ulen)))
 		return;
 
 	printdata((u_char *)(sp + offset), ntohs(udp->uh_ulen));
+#endif
+
 }
 
 // check for matching CHADDR (Peter Apian-Bennewitz <apian@ise.fhg.de>)
@@ -303,7 +313,7 @@ void printReqParmList(u_char *data, int len) {
 // print the header and the options.
 int printdata(u_char *data, int data_len) {
 	int	j, i;
-	u_char	buf[LARGESTRING];
+	char	buf[LARGESTRING];
 
 	if (data_len == 0)
 		return 0;
@@ -366,7 +376,7 @@ int printdata(u_char *data, int data_len) {
 	case 60:	// Domain name
 	case 86:	// NDS Tree name
 	case 87:	// NDS context
-		strncpy(buf, &data[j + 2], data[j + 1]);
+		strncpy(buf, (char *)&data[j + 2], data[j + 1]);
 		buf[data[j + 1]] = 0;
 		printf("%s", buf);
 		break;
@@ -512,7 +522,7 @@ int printdata(u_char *data, int data_len) {
 		printf("-");
 		print8bits(data + j + 4);
 		printf(" ");
-		strncpy(buf, &data[j + 5], data[j + 1] - 3);
+		strncpy(buf, (char *)&data[j + 5], data[j + 1] - 3);
 		buf[data[j + 1] - 3]=0;
 		printf("%s", buf);
 		break;
