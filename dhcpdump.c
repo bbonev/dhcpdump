@@ -516,18 +516,17 @@ int printdata(u_char *data, int data_len) {
 		break;
 
 	case 82:	// Relay Agent Information
-		printf("\n");
-		for (i = j + 2; i < j + data[j + 1]; ) {
-			printf("%-17s %-13s ", " ",
+		for (i = j + 2; i < j + data[j + 1] + 2; ) {
+			printf("\n%-17s %-13s ", " ",
 			    data[i] > sizeof(relayagent_suboptions) ?
 			    "*wrong value*" :
 			    relayagent_suboptions[data[i]]);
-			if (i + data[i + 1] > j + data[j + 1]) {
+			if (i + data[i + 1] + 2 > j + data[j + 1] + 2) {
 				printf("*MALFORMED -- TOO LARGE*\n");
 				break;
 			}
 			printHexColon(data + i + 2, data[i + 1]);
-			i += data[i + 1];
+			i += data[i + 1] + 2;
 		}
 		break;
 
