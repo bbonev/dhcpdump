@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
 	return 0;
 }
 
-void pcap_callback(u_char *user, const struct pcap_pkthdr *h, const u_char *sp) {
+void pcap_callback(u_char *user __attribute__((unused)), const struct pcap_pkthdr *h, const u_char *sp) {
 	struct ether_header *eh;
 	struct ip *ip;
 	struct udphdr *udp;
