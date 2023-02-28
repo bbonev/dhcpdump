@@ -7,6 +7,10 @@ all: dhcpdump dhcpdump.8
 clean:
 	-rm dhcpdump.o dhcpdump dhcpdump.8
 
+re:
+	${MAKE} clean
+	${MAKE} -j all
+
 dhcpdump.8: dhcpdump.pod Makefile
 	pod2man --section 8 \
 		--date "23 June 2008" \
