@@ -5,7 +5,7 @@ LIBS += -lpcap
 all: dhcpdump dhcpdump.8
 
 clean:
-	-rm dhcpdump.o dhcpdump dhcpdump.8
+	-rm -f dhcpdump.o dhcpdump dhcpdump.8
 
 re:
 	${MAKE} clean
