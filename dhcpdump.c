@@ -28,10 +28,6 @@
 #include <regex.h>
 #include "dhcp_options.h"
 
-#ifndef HAVE_STRSEP
-#include "strsep.c"
-#endif
-
 #define SPERW	(7 * 24 * 3600)
 #define SPERD	(24 * 3600)
 #define SPERH	(3600)
