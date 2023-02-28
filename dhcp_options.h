@@ -266,7 +266,7 @@ const char *dhcp_options[] = {
 /* 255 */ "End"};
 
 const char *dhcp_message_types[] = {
-/*   0 */ "wrong specified",
+/*   0 */ "undefined",
 /*   1 */ "DHCPDISCOVER",
 /*   2 */ "DHCPOFFER",
 /*   3 */ "DHCPREQUEST",
@@ -307,7 +307,7 @@ const char *ethernet_encapsulation[] = {
 };
 
 const char *operands[] = {
-/*   0 */ "wrong specified",
+/*   0 */ "undefined",
 /*   1 */ "BOOTPREQUEST",
 /*   2 */ "BOOTPREPLY"
 };
@@ -321,7 +321,7 @@ const char *relayagent_suboptions[] = {
 
 // Copied from RFC1700
 const char *htypes[] = {
-/*   0 */ "wrong specified",
+/*   0 */ "undefined",
 /*   1 */ "Ethernet",
 /*   2 */ "Experimental Ethernet",
 /*   3 */ "Amateur Radio AX.25",
