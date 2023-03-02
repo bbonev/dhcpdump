@@ -1,0 +1,20 @@
+Source: dhcpdump
+Section: admin
+Priority: optional
+Maintainer: Boian Bonev <bbonev@ipacct.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ libpcap-dev,
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/bbonev/dhcpdump
+
+Package: dhcpdump
+Architecture: any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
+Description: Parse DHCP packets from a network interface
+ This package provides a tool for visualization of DHCP packets
+ on a network interface to analyze DHCP client requests and
+ server responses.

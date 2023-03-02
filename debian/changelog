@@ -1,0 +1,148 @@
+dhcpdump (1.9-1) unstable; urgency=medium
+
+  * Change maintainer (Closes: #934419)
+  * Change upstream to a maintained fork
+
+ -- Boian Bonev <bbonev@ipacct.com>  Thu, 02 Mar 2023 21:53:29 +0000
+
+dhcpdump (1.8-5) experimental; urgency=medium
+
+  [ Boian Bonev ]
+  * QA upload.
+  * Install binary and man page.
+  * Add patches that fix:
+    - build options in Makefile (hardening and cross)
+    - ethertype handling (Closes: #873635)
+    - flags calculation
+    - opt82 processing
+    - counts in string arrays (OOB access)
+    - spelling errors
+    - wrong description in man page (Closes: #647228)
+  * Do not depend on tcpdump.
+  * Bump standards to 4.6.2, no changes.
+  * Remove unrelated key and override source not signed.
+  * wrap-and-sort
+
+  [ Joao Paulo Lima de Oliveira ]
+  * debian/control:
+    - Set Rules-Requires-Root:no.
+    - Set homepage-field.
+    - Bumped Standards-Version to 4.6.1.
+    - Set debhelper-compat version in Build-Depends.
+    - Added Depends ${shlibs:Depends} in Depends fields.
+  * debian/rules:
+    - Rewrite to use dh-sequencer.
+  * debian/metadata:
+    - Added missing upstream metadata.
+    - Added upstream's key.
+  * debian/watch:
+    - Add watch file.
+
+ -- Boian Bonev <bbonev@ipacct.com>  Thu, 23 Feb 2023 08:31:03 +0000
+
+dhcpdump (1.8-4) unstable; urgency=medium
+
+  * QA upload.
+  * Drop NMU-Disclaimer because this package is now in QA.
+  * d/copyright: Convert to machine-readable format.
+  * Convert to 3.0 source format.
+
+ -- Bastian Germann <bage@debian.org>  Mon, 05 Dec 2022 16:08:35 +0100
+
+dhcpdump (1.8-3) unstable; urgency=medium
+
+  * QA upload.
+  * Set maintainer to Debian QA Group <packages@qa.debian.org>. (see: #934419)
+  * debian/rules: Add build-{arch,indep} (Closes: #999183).
+
+ -- Marcos Talau <talau@debian.org>  Sun, 06 Nov 2022 13:49:23 -0300
+
+dhcpdump (1.8-2.2) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Upload to unstable
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Tue, 18 Apr 2017 14:50:01 +0200
+
+dhcpdump (1.8-2.1) experimental; urgency=low
+
+  [ Manuel A. Fernandez Montecelo ]
+  * Non-maintainer upload.
+
+  [ Svante Signell ]
+  * Fix to make dhcpdump build on GNU/Hurd (Closes: #622267)
+    - modified by mafm@d.o to support kFreeBSD arches
+
+  [ Chris Lamb ]
+  * Fix for reproducible builds (Closes: #777309)
+
+  [ Helmut Grohne ]
+  * Fix FTCBFS: use the host arch compiler (Closes: #793893)
+
+ -- Manuel A. Fernandez Montecelo <mafm@debian.org>  Thu, 13 Apr 2017 17:34:33 +0200
+
+dhcpdump (1.8-2) unstable; urgency=low
+
+  * Bump standards-version
+  * Added missing build depends against libpcap (closes: Bug#488816)
+
+ -- Joey Schulze <joey@infodrom.org>  Wed, 02 Jul 2008 13:22:21 +0200
+
+dhcpdump (1.8-1) unstable; urgency=low
+
+  * Incorporate NMU by Amaya Rodrigo Sastre, thanks a lot
+  * New upstream version
+    . Moved manpage into section 8
+  * Fixed typo in NMU-Disclaimer, thanks to Petter Reinholdtsen (See:
+    Bug#225895)
+  * Added support for the nostrip option (closes: Bug#436762)
+  * Added support for debug compilation
+  * Forward ported patch by Olivier Chirossel <Olivier.CHIROSSEL@neuf.com>
+    to display option 82 (Relay Agent Information) with two sub-options
+    (closes: Bug#317440)
+
+ -- Joey Schulze <joey@infodrom.org>  Sat, 28 Jun 2008 13:52:32 +0200
+
+dhcpdump (1.7-1) unstable; urgency=low
+
+  * New upstream version
+    - Support for tcpdump 3.8.x
+
+ -- Martin Schulze <joey@infodrom.org>  Mon,  6 Mar 2006 09:07:15 +0100
+
+dhcpdump (1.6-1) unstable; urgency=low
+
+  * New upstream version
+  * Applied rewritten patch so that dhcpdump can parse newstyle tcpdump
+    output as well (closes: Bug#255556)
+
+ -- Martin Schulze <joey@infodrom.org>  Sun,  7 Nov 2004 15:59:13 +0100
+
+dhcpdump (1.4-2) unstable; urgency=low
+
+  * Added a note about the packages' cvs directory
+
+ -- Martin Schulze <joey@finlandia.infodrom.north.de>  Sun,  7 Nov 2004 15:14:29 +0100
+
+dhcpdump (1.4-1) unstable; urgency=low
+
+  * Added a disclaimer for those people who plan to NMU this package
+  * New upstream version
+  * Corrected highlight of references in manpage
+  * Added support for auto-configure script
+  * Corrected spelling error in manpage
+
+ -- Martin Schulze <joey@finlandia.infodrom.north.de>  Tue, 12 Feb 2002 09:55:57 +0100
+
+dhcpdump (1.3-2) unstable; urgency=low
+
+  * Whoops, forgot to add the postinst and prerm scripts
+  * Added -isp to dpkg-gencontrol
+
+ -- Martin Schulze <joey@finlandia.infodrom.north.de>  Sat,  8 Dec 2001 15:27:02 +0100
+
+dhcpdump (1.3-1) unstable; urgency=low
+
+  * Initial version
+
+ -- Martin Schulze <joey@finlandia.infodrom.north.de>  Sun, 18 Nov 2001 20:32:34 +0100

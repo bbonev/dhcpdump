@@ -1,0 +1,10 @@
+#! /usr/bin/make -f
+
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
+%:
+	dh $@
+
+override_dh_install:
+	install -TDm 0755 dhcpdump debian/dhcpdump/usr/sbin/dhcpdump
+	install -TDm 0644 dhcpdump.8 debian/dhcpdump/usr/share/man/man8/dhcpdump.8
