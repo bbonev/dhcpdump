@@ -9,17 +9,14 @@
 //
 
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <sys/time.h>
 #include <net/ethernet.h>
-#include <netinet/in_systm.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <netinet/udp.h>
 #include <netinet/ether.h>
 #include <arpa/inet.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
