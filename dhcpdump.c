@@ -26,6 +26,7 @@
 #include <pcap.h>
 #include <err.h>
 #include <regex.h>
+#include "version.h"
 #include "dhcp_options.h"
 
 #define SPERW	(7 * 24 * 3600)
@@ -70,9 +71,10 @@ void	printHexColon(u_char *data, int len);
 void	printHex(u_char *data, int len);
 void	printHexString(u_char *data, int len);
 
-void usage() {
-	printf("Usage: $0 <-i interface> [-h macaddress]\n");
-	exit(0);
+int usage(const char *me) {
+	printf("dhcpdump "VERSION"\n");
+	printf("Usage: %s -i <interface> [-h macaddress]\n",me);
+	return 0;
 }
 
 int main(int argc, char **argv) {
@@ -93,11 +95,12 @@ int main(int argc, char **argv) {
 		default:
 			fprintf(stderr, "%s: %c: unknown option\n",
 			    argv[0], argv[i][1]);
-			usage();
+			return usage(argv[0]);
 		}
 	}
 
-	if (interface == NULL) usage();
+	if (interface == NULL)
+		return usage(argv[0]);
 
 	if (hmask)
 		regcomp(&preg, hmask, REG_EXTENDED | REG_ICASE | REG_NOSUB);
