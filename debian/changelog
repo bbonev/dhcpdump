@@ -2,6 +2,7 @@ dhcpdump (1.9-1) unstable; urgency=medium
 
   * Change maintainer (Closes: #934419)
   * Change upstream to a maintained fork
+  * Upload to unstable
 
  -- Boian Bonev <bbonev@ipacct.com>  Thu, 02 Mar 2023 21:53:29 +0000
 
