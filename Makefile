@@ -24,3 +24,18 @@ dhcpdump: dhcpdump.o
 
 dhcpdump.o: dhcpdump.c dhcp_options.h Makefile
 	${CC} ${CFLAGS} -c -o $@ dhcpdump.c
+
+VER:=$(shell grep 'define VERSION' version.h|tr -d '\"'|awk '{print $$3}')
+mkotar:
+	${MAKE} clean
+	-dh_clean
+	tar \
+		--xform 's,^[.],dhcpdump-${VER},' \
+		--exclude ./.git \
+		--exclude ./.gitignore \
+		--exclude ./debian \
+		-Jcvf ../dhcpdump_${VER}.orig.tar.xz .
+	-rm -f ../dhcpdump_${VER}.orig.tar.xz.asc
+	gpg -a --detach-sign ../dhcpdump_${VER}.orig.tar.xz
+	cp -fa ../dhcpdump_${VER}.orig.tar.xz ../dhcpdump-${VER}.tar.xz
+	cp -fa ../dhcpdump_${VER}.orig.tar.xz.asc ../dhcpdump-${VER}.tar.xz.asc
