@@ -1,6 +1,6 @@
 CFLAGS+=${CPPFLAGS}
-CFLAGS+=-Wall -Wextra -g
-LDFLAGS+=-g
+CFLAGS+=-Wall -Wextra -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g -O3
+LDFLAGS+=-g -Wl,-z,relro -Wl,-z,now
 LIBS+=-lpcap
 
 all: dhcpdump dhcpdump.8
