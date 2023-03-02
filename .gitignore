@@ -5,3 +5,6 @@
 *.o
 dhcpdump
 dhcpdump.8
+debian/debhelper-build-stamp
+debian/dhcpdump.substvars
+debian/files
