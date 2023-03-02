@@ -20,7 +20,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include <pcap.h>
+#include <pcap/bpf.h>
+#include <pcap/pcap.h>
 #include <err.h>
 #include <regex.h>
 #include "version.h"
