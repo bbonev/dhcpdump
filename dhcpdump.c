@@ -6,6 +6,7 @@
 // {{{ includes
 
 #include <err.h>
+#include <pcap.h>
 #include <time.h>
 #include <ctype.h>
 #include <regex.h>
@@ -14,12 +15,12 @@
 #include <string.h>
 #include <sys/time.h>
 #include <arpa/inet.h>
-#include <pcap/bpf.h>
-#include <pcap/pcap.h>
 #include <netinet/in.h>
 #include <netinet/ip.h>
 #include <netinet/udp.h>
-#include <net/ethernet.h>
+#include <sys/socket.h>
+#include <net/if_arp.h>
+#include <netinet/if_ether.h>
 
 #include "version.h"
 #include "dhcp_options.h"
