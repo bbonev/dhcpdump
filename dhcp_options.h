@@ -314,7 +314,7 @@ const char *operands[] = {
 
 // From RFC 3046
 const char *relayagent_suboptions[] = {
-/*   0 */ "<unknown-0>",
+/*   0 */ "<unknown>",
 /*   1 */ "Circuit-ID",
 /*   2 */ "Remote-ID"
 };
