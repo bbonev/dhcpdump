@@ -4,7 +4,26 @@ dhcpdump (1.9-1) unstable; urgency=medium
   * Change upstream to a maintained fork
   * Upload to unstable
 
- -- Boian Bonev <bbonev@ipacct.com>  Thu, 02 Mar 2023 21:53:29 +0000
+ -- Boian Bonev <bbonev@ipacct.com>  Sun, 19 Mar 2023 00:11:47 +0000
+
+dhcpdump (1.8-7) unstable; urgency=medium
+
+  * Revert all non-targeted changes since 1.8-4
+  * New maintainer (Closes: #934419)
+  * Fix old packaging
+    - install copyright
+    - hardening flags
+    - proper strip
+  * Add 2 missing checks to d/p/dhcpdump-bugfix_strcounts.patch
+
+ -- Boian Bonev <bbonev@ipacct.com>  Sat, 18 Mar 2023 21:43:18 +0000
+
+dhcpdump (1.8-6) unstable; urgency=medium
+
+  * QA upload.
+  * Upload 1.8-5 fixes to unstable.
+
+ -- Adam Borowski <kilobyte@angband.pl>  Wed, 08 Mar 2023 17:43:02 +0100
 
 dhcpdump (1.8-5) experimental; urgency=medium
 
