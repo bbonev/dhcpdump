@@ -1,10 +1,9 @@
 dhcpdump (1.9-1) unstable; urgency=medium
 
-  * Change maintainer (Closes: #934419)
   * Change upstream to a maintained fork
-  * Upload to unstable
+  * Restore reverted packaging changes
 
- -- Boian Bonev <bbonev@ipacct.com>  Sun, 19 Mar 2023 00:11:47 +0000
+ -- Boian Bonev <bbonev@ipacct.com>  Sun, 19 Mar 2023 00:12:50 +0000
 
 dhcpdump (1.8-7) unstable; urgency=medium
 
