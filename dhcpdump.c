@@ -569,8 +569,10 @@ nexthdr:
 		eh->ether_dhost[0],eh->ether_dhost[1],eh->ether_dhost[2],
 		eh->ether_dhost[3],eh->ether_dhost[4],eh->ether_dhost[5]);
 
-	strcpy(ip_orig,(char *)inet_ntoa(ip->ip_src));
-	strcpy(ip_dest,(char *)inet_ntoa(ip->ip_dst));
+	ip_orig[0]=0;
+	ip_dest[0]=0;
+	inet_ntop(AF_INET,&ip->ip_src,ip_orig,sizeof ip_orig);
+	inet_ntop(AF_INET,&ip->ip_src,ip_dest,sizeof ip_dest);
 
 	if (hmask&&check_ch((uint8_t *)(sp+offset),ntohs(udp->UDP_LEN_F)))
 		return;
