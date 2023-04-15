@@ -14,11 +14,10 @@ This fork of `dhcpdump` 1.8 by Edwin Groothuis, edwin@mavetju.org (http://www.ma
 * Let the `Makefile` use environment variables
 * Spelling fixes
 * Remove the unused `strsep` implementation
-* Use a stricter filer for DHCP packets
+* Use a stricter filter for DHCP packets
 * Add an option to dump packet content in HEX
 * More consistent alignment of output
 * Avoid extra new lines in parameter request list (option 55)
 * Print client identifier as HEX+ASCII
 * Print mac addresses with leading zeroes
 * Add support for VLAN tagged traffic
-
