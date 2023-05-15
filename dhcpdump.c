@@ -508,7 +508,7 @@ static void pcap_callback(uint8_t *user __attribute__((unused)),const struct pca
 	}
 
 	if (h->caplen<ETHER_HDR_LEN) {
-		printf("Ignored too short ethernet packet: %d bytes\n",h->caplen);
+		fprintf(stderr,"Ignored too short ethernet packet: %d bytes\n",h->caplen);
 		return;
 	}
 
@@ -525,11 +525,11 @@ nexthdr:
 		case ETH_P_8021Q:
 		case ETH_P_8021AD:
 			if (h->caplen<ETHER_HDR_LEN+offset+4) {
-				printf("Ignored too short ethernet+vlan packet: %d bytes\n",h->caplen);
+				fprintf(stderr,"Ignored too short ethernet+vlan packet: %d bytes\n",h->caplen);
 				return;
 			}
 			if (vlanc>sizeof vlant/sizeof *vlant) {
-				printf("Ignored too many vlans in packet: %d bytes\n",h->caplen);
+				fprintf(stderr,"Ignored too many vlans in packet: %d bytes\n",h->caplen);
 				return;
 			}
 			vlant[vlanc]=ntohs(*et)==ETH_P_8021Q?'C':'S';
@@ -539,13 +539,13 @@ nexthdr:
 			et+=2;
 			goto nexthdr;
 		default:
-			printf("Ignored non IPv4 packet: 0x%x\n",ntohs(eh->ether_type));
+			fprintf(stderr,"Ignored non IPv4 packet: 0x%x\n",ntohs(eh->ether_type));
 			return;
 	}
 
 	// Check for length
 	if (h->caplen<offset+sizeof(struct ip)) {
-		printf("Ignored too short IPv4 packet: %d bytes\n",h->caplen);
+		fprintf(stderr,"Ignored too short IPv4 packet: %d bytes\n",h->caplen);
 		return;
 	}
 
