@@ -77,11 +77,12 @@ regex_t preg;
 
 static inline int usage(const char *me) { // {{{
 	printf("dhcpdump "VERSION"\n");
-	printf("Usage:\n");
-	printf("%s -i <interface> [-h <macaddress>] [-H]\n",me);
-	printf("%s -r <pcapfile>  [-h <macaddress>] [-H]\n",me);
-	printf("\t-h applies a filter by <macaddress>\n");
-	printf("\t-H will print whole packet hex dump\n");
+	printf("  Usage:\n");
+	printf("    %s -i <interface> [-h <macaddress>] [-H]\n",me);
+	printf("    %s -r <pcapfile>  [-h <macaddress>] [-H]\n",me);
+	printf("  Options:\n");
+	printf("    -h regexp filter by <macaddress>\n");
+	printf("    -H prints whole packet hex dump\n");
 	return 0;
 } // }}}
 
