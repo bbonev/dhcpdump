@@ -77,7 +77,11 @@ regex_t preg;
 
 static inline int usage(const char *me) { // {{{
 	printf("dhcpdump "VERSION"\n");
-	printf("Usage: %s -i <interface> [-h macaddress]\n",me);
+	printf("Usage:\n");
+	printf("%s -i <interface> [-h <macaddress>] [-H]\n",me);
+	printf("%s -r <pcapfile>  [-h <macaddress>] [-H]\n",me);
+	printf("\t-h applies a filter by <macaddress>\n");
+	printf("\t-H will print whole packet hex dump\n");
 	return 0;
 } // }}}
 
@@ -589,6 +593,7 @@ nexthdr:
 int main(int argc,char **argv) { // {{{
 	struct bpf_program fp;
 	char *interface=NULL;
+	char *pcapfile=NULL;
 	pcap_t *cap;
 	int i;
 
@@ -605,20 +610,30 @@ int main(int argc,char **argv) { // {{{
 			case 'i':
 				interface=argv[++i];
 				break;
+			case 'r':
+				pcapfile=argv[++i];
+				break;
 			default:
 				fprintf(stderr,"%s: %c: unknown option\n",argv[0],argv[i][1]);
 				return usage(argv[0]);
 		}
 	}
 
-	if (interface==NULL)
+	if (interface==NULL&&pcapfile==NULL)
 		return usage(argv[0]);
+	if (interface!=NULL&&pcapfile!=NULL)
+		errx(1,"Can not capture from interface \"%s\" and read from file \"%s\" at the same time",interface,pcapfile);
 
 	if (hmask)
 		regcomp(&preg,hmask,REG_EXTENDED|REG_ICASE|REG_NOSUB);
 
-	if ((cap=pcap_open_live(interface,1500,1,100,errbuf))==NULL)
-		errx(1,"pcap_open_live(): %s",errbuf);
+	if (interface!=NULL) {
+		if ((cap=pcap_open_live(interface,1500,1,100,errbuf))==NULL)
+			errx(1,"pcap_open_live(): %s",errbuf);
+	} else {
+		if ((cap=pcap_open_offline(pcapfile,errbuf))==NULL)
+			errx(1,"pcap_open_offline(): %s",errbuf);
+	}
 	if (pcap_compile(cap,&fp,"ip and udp and (src port bootpc or bootps) and (dst port bootpc or bootps)",0,0)<0)
 		errx(1,"pcap_compile: %s",pcap_geterr(cap));
 	if (pcap_setfilter(cap,&fp)<0)

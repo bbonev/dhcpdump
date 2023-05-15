@@ -8,7 +8,9 @@ B<dhcpdump> - DHCP packet dumper
 
 =head1 SYNOPSIS
 
-B<dhcpdump> [B<-h> I<regular-expression>] B<-i> I<interface>
+B<dhcpdump> [B<-h> I<regular-expression>] [B<-H>] B<-i> I<interface>
+
+B<dhcpdump> [B<-h> I<regular-expression>] [B<-H>] B<-r> I<pcapfile>
 
 =head1 DESCRIPTION
 
@@ -20,12 +22,19 @@ easier checking and debugging.
 S<dhcpdump -i /dev/fxp0>
 
 If you want to filter a specific Client Hardware Address (CHADDR), then
-you can specify it as a regular expressions:
+you can specify it as a regular expression:
 
 S<dhcpdump -i /dev/fxp0 -h ^00:c0:4f>
 
 This will display only the packets with Client Hardware Addresses
 which start with 00:c0:4f.
+
+Option B<-H> will additionally show full packet hex dump.
+
+Instead of getting live data from an interface, a pcap dump file can be
+used:
+
+S<dhcpdump -r pcapfile>
 
 =head1 OUTPUT
 
