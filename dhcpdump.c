@@ -282,12 +282,12 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 				break;
 
 			case 1: // Subnetmask
-			case 3: // Routers
 			case 16: // Swap server
 			case 28: // Broadcast address
 			case 32: // Router solicitation
 			case 50: // Requested IP address
 			case 54: // Server identifier
+			case 118: // Subnet selection option
 				printIPaddress(data+j+2);
 				break;
 
@@ -302,14 +302,18 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 			case 64: // NIS+ domain
 			case 66: // TFTP server name
 			case 67: // bootfile name
-			case 60: // Domain name
 			case 86: // NDS Tree name
 			case 87: // NDS context
+			case 100: // PCode - TZ-Posix String
+			case 101: // TCode - TX-Database String
+			case 114: // Captive-portal
+			case 147: // DOTS Reference Identifier
 				strncpy(buf,(char *)&data[j+2],data[j+1]);
 				buf[data[j+1]]=0;
 				printf("%s",buf);
 				break;
 
+			case 3: // Routers
 			case 4: // Time servers
 			case 5: // Name servers
 			case 6: // DNS server
@@ -334,7 +338,12 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 			case 74: // IRC server
 			case 75: // StreetTalk server
 			case 76: // StreetTalk directory assistance server
+			case 78: // Directory Agent
 			case 85: // NDS server
+			case 92: // Associated IP
+			case 148: // DOTS Address
+			case 150: // TFTP server address
+			case 162: // Encrypted DNS Server
 				for (i=0;i<data[j+1]/4;i++) {
 					if (i!=0)
 						printf(",");
@@ -389,6 +398,7 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 				break;
 
 			case 37: // TCP default TTL
+			case 145: // FORCERENEW_NONCE_CAPABLE
 				print8bits(data+j+2);
 				break;
 
@@ -408,6 +418,13 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 			case 51: // IP address leasetime
 			case 58: // T1
 			case 59: // T2
+			case 91: // Client last transaction time
+			case 108: // IPv6-Only preferred
+			case 152: // base-time
+			case 153: // start-time-of-state
+			case 154: // query-start-time
+			case 155: // query-end-time
+			case 211: // reboot-time
 				printTime32(data+j+2);
 				break;
 
@@ -431,7 +448,9 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 				printHex(data+j+2,data[j+1]);
 				break;
 
+			case 60: // Class identifier
 			case 61: // Client identifier
+			case 77: // User class
 				printHexString(data+j+2,data[j+1],8);
 				break;
 
