@@ -21,3 +21,5 @@ This fork of `dhcpdump` 1.8 by Edwin Groothuis, edwin@mavetju.org (http://www.ma
 * Print client identifier as HEX+ASCII
 * Print mac addresses with leading zeroes
 * Add support for VLAN tagged traffic
+* Add option to read traffic from pcap dump file
+* Update option names and semantics from IANA ([Rob Gill](https://github.com/rrobgill))
