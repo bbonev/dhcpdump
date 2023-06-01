@@ -23,3 +23,6 @@ This fork of `dhcpdump` 1.8 by Edwin Groothuis, edwin@mavetju.org (http://www.ma
 * Add support for VLAN tagged traffic
 * Add option to read traffic from pcap dump file
 * Update option names and semantics from IANA ([Rob Gill](https://github.com/rrobgill))
+* Parse classless static routes option 121 and 249 using compact address and mask format (RFC3422) ([Rob Gill](https://github.com/rrobgill))
+* Parse PXE related options 93 and 94 (RFC4578 and errata) ([Rob Gill](https://github.com/rrobgill))
+* Parse stateless autoconfigure option 116 (RFC2563) ([Rob Gill](https://github.com/rrobgill))
