@@ -385,3 +385,9 @@ const char *client_architecture_names[] = {
 /*   8 */ "EFI Xscale",
 /*   9 */ "EFI BC"
 };
+
+//From rfc 2563
+const char *auto_configure[] = {
+/*   0 */ "DoNotAutoConfigure",
+/*   1 */ "AutoConfigure"
+};

@@ -497,6 +497,10 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 				printf("%u (Rev %d.%d)", (data[j+3]<<8|data[j+4]),data[j+3],data[j+4]);
 				break;
 
+			case 116: // Auto-Configure
+				printf("%d (%s)",data[j+2],data[j+2]>strcountof(auto_configure)?"*unknown*":auto_configure[data[j+2]]);
+				break;
+
 			case 121: // Classless static route
 			case 249: // MSFT - Classless route
                                 printIPaddressCompactMaskAddress(data+j+2,data[j+1]);
