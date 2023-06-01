@@ -371,3 +371,23 @@ const char *htypes[] = {
 /*  37 */ "HFI",
 /*  38 */ "Unified Bus"
 };
+
+// From RFC 4578 and errata
+const char *client_architecture_names[] = {
+/*   0 */ "Intel x86PC",
+/*   1 */ "NEC/PC98",
+/*   2 */ "Itanium",
+/*   3 */ "DEC Alpha",
+/*   4 */ "Arc x86",
+/*   5 */ "Intel Lean Client",
+/*   6 */ "EFI IA32",
+/*   7 */ "EFI x86-64",
+/*   8 */ "EFI Xscale",
+/*   9 */ "EFI BC"
+};
+
+//From rfc 2563
+const char *auto_configure[] = {
+/*   0 */ "DoNotAutoConfigure",
+/*   1 */ "AutoConfigure"
+};

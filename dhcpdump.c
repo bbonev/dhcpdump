@@ -119,6 +119,17 @@ static inline void printIPaddressMask(uint8_t *data) { // {{{ print the data as 
 		data[4],data[5],data[6],data[7]);
 } // }}}
 
+static inline void printIPaddressCompactMaskAddress(uint8_t *data, int len) { // {{{ print the data as series of IP address and masks
+	int i,j;
+	for (i=0;i<len;i++) {
+		j=4+(data[i]+7)/8;
+		printf("%u.%u.%u.%u/%u,%u.%u.%u.%u ",
+			j>4?data[i+1]:0,j>5?data[i+2]:0,j>6?data[i+3]:0,j>7?data[i+4]:0,data[i],
+			data[j-3],data[j-2],data[j-1],data[j]);
+		i=i+j;
+	}
+} // }}}
+
 static inline void print8bits(uint8_t *data) { // {{{ prints a value of 8 bits (1 byte)
 	printf("%u",data[0]);
 } // }}}
@@ -477,6 +488,23 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 					i+=data[i+1]+2;
 				}
 				break;
+
+			case 93: // Client System Architecture
+                                printf("%d (%s)",data[j+3],data[j+3]>strcountof(client_architecture_names)?"*unknown*":client_architecture_names[data[j+3]]);
+                                break;
+
+			case 94: // Client Network Interface Identifier
+				printf("%u (Rev %d.%d)", (data[j+3]<<8|data[j+4]),data[j+3],data[j+4]);
+				break;
+
+			case 116: // Auto-Configure
+				printf("%d (%s)",data[j+2],data[j+2]>strcountof(auto_configure)?"*unknown*":auto_configure[data[j+2]]);
+				break;
+
+			case 121: // Classless static route
+			case 249: // MSFT - Classless route
+                                printIPaddressCompactMaskAddress(data+j+2,data[j+1]);
+                                break;
 
 		}
 		printf("\n");
