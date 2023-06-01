@@ -489,6 +489,14 @@ static inline int printdata(uint8_t *data,int data_len) { // {{{ print the heade
 				}
 				break;
 
+			case 93: // Client System Architecture
+                                printf("%d (%s)",data[j+3],data[j+3]>strcountof(client_architecture_names)?"*unknown*":client_architecture_names[data[j+3]]);
+                                break;
+
+			case 94: // Client Network Interface Identifier
+				printf("%u (Rev %d.%d)", (data[j+3]<<8|data[j+4]),data[j+3],data[j+4]);
+				break;
+
 			case 121: // Classless static route
 			case 249: // MSFT - Classless route
                                 printIPaddressCompactMaskAddress(data+j+2,data[j+1]);
