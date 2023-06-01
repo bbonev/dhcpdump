@@ -263,7 +263,8 @@ const char *dhcp_options[] = {
 /* 252 */ "MSFT - WinSock Proxy Auto Detect",
 /* 253 */ "Reserved for private use",
 /* 254 */ "Reserved for private use",
-/* 255 */ "End"};
+/* 255 */ "End",
+};
 
 const char *dhcp_message_types[] = {
 /*   0 */ "undefined",
@@ -284,7 +285,7 @@ const char *dhcp_message_types[] = {
 /*  15 */ "DHCPLEASEQUERYDONE",
 /*  16 */ "DHCPACTIVELEASEQUERY",
 /*  17 */ "DHCPLEASEQUERYSTATUS",
-/*  18 */ "DHCPTLS"
+/*  18 */ "DHCPTLS",
 };
 
 const char *netbios_node_type[] = {
@@ -383,11 +384,11 @@ const char *client_architecture_names[] = {
 /*   6 */ "EFI IA32",
 /*   7 */ "EFI x86-64",
 /*   8 */ "EFI Xscale",
-/*   9 */ "EFI BC"
+/*   9 */ "EFI BC",
 };
 
 //From rfc 2563
 const char *auto_configure[] = {
 /*   0 */ "DoNotAutoConfigure",
-/*   1 */ "AutoConfigure"
+/*   1 */ "AutoConfigure",
 };
