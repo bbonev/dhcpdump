@@ -258,7 +258,7 @@ static inline void printIPaddressCompactMaskAddress(uint8_t *data,int len) { // 
 			i?"\n":"",
 			i?44:0,"",
 			j>4?data[i+1]:0,j>5?data[i+2]:0,j>6?data[i+3]:0,j>7?data[i+4]:0,data[i],
-			data[j-3],data[j-2],data[j-1],data[j]);
+			data[i+j-3],data[i+j-2],data[i+j-1],data[i+j]);
 		i+=j;
 	}
 } // }}}
