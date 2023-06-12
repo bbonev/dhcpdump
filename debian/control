@@ -8,6 +8,8 @@ Build-Depends:
 Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/bbonev/dhcpdump
+Vcs-Browser: https://github.com/bbonev/dhcpdump
+Vcs-Git: https://github.com/bbonev/dhcpdump.git
 
 Package: dhcpdump
 Architecture: any
