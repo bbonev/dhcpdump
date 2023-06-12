@@ -1,5 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Comment: This package was put together by Martin Schulze <joey@debian.org>.
+Upstream-Name: iotop-c
+Upstream-Contact: Boian Bonev <bbonev@ipacct.com>
 Source: https://github.com/bbonev/dhcpdump/releases
 
 Files: *
