@@ -1,16 +1,14 @@
 General
 -------
-FILES			- This file
-README.md		- Current information about the project
-LICENSE			- License under which this software is distributed
-CHANGES			- Old change log
-CONTACT			- Original author contact information
+FILES           - This file
+README.md       - Current information about the project
+LICENSE         - License under which this software is distributed
+CHANGES         - Old change log
+CONTACT         - Original author contact information
 
 Source-files
 ------------
-dhcpdump.1		- Man-page, obtained from dhcpdump.pod
-dhcp_options.h	- Tables with dhcp-packet-field values and their
-				  readable descriptions
-dhcpdump.c		- The source-file
-dhcpdump.pod	- The original man-file
-Makefile		- make build rules
+dhcp_options.h  - Tables with dhcp-packet-field values and their readable descriptions
+dhcpdump.c      - The source-file
+dhcpdump.pod    - The original man-file
+Makefile        - Simple build system
