@@ -3,6 +3,11 @@ CFLAGS+=-Wall -Wextra -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SO
 LDFLAGS+=-g -Wl,-z,relro -Wl,-z,now -fPIE -pie
 LIBS+=-lpcap
 
+ifeq ($(shell uname -s),Darwin)
+LDFLAGSTODROP:=-Wl,-z,relro -Wl,-z,now
+LDFLAGS:=$(filter-out $(LDFLAGSTODROP),$(LDFLAGS))
+endif
+
 all: dhcpdump dhcpdump.8
 
 clean:
