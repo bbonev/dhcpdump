@@ -24,10 +24,10 @@ dhcpdump.8: dhcpdump.pod Makefile
 		--center "User Contributed Software" \
 		dhcpdump.pod dhcpdump.8
 
-dhcpdump: dhcpdump.o
+dhcpdump: dhcpdump.o Makefile
 	${CC} ${LDFLAGS} -o $@ dhcpdump.o ${LIBS}
 
-dhcpdump.o: dhcpdump.c dhcp_options.h Makefile
+dhcpdump.o: dhcpdump.c dhcp_options.h version.h Makefile
 	${CC} ${CFLAGS} -c -o $@ dhcpdump.c
 
 VER:=$(shell grep 'define VERSION' version.h|tr -d '\"'|awk '{print $$3}')
