@@ -3,12 +3,13 @@ General
 FILES           - This file
 README.md       - Current information about the project
 LICENSE         - License under which this software is distributed
-CHANGES         - Old change log
-CONTACT         - Original author contact information
+old_CHANGES     - Old change log
+old_CONTACT     - Original author contact information
 
 Source-files
 ------------
 dhcp_options.h  - Tables with dhcp-packet-field values and their readable descriptions
+version.h       - Current program version
 dhcpdump.c      - The source-file
 dhcpdump.pod    - The original man-file
 Makefile        - Simple build system

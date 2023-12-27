@@ -1,8 +1,4 @@
 //
-// $Id: dhcp_options.h,v 1.4 2004/10/31 11:22:58 mavetju Exp $
-//
-
-//
 // this list was stolen from The DHCP Handbook by Droms and Lemon, Appendix D
 //
 

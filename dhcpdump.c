@@ -1,8 +1,3 @@
-// DHCPDUMP
-//
-// $Id: dhcpdump.c,v 1.12 2004/10/31 11:22:58 mavetju Exp $
-//
-
 // {{{ includes
 
 #include <err.h>
