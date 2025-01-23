@@ -639,7 +639,7 @@ nexthdr:
 	ip_orig[0]=0;
 	ip_dest[0]=0;
 	inet_ntop(AF_INET,&ip->ip_src,ip_orig,sizeof ip_orig);
-	inet_ntop(AF_INET,&ip->ip_src,ip_dest,sizeof ip_dest);
+	inet_ntop(AF_INET,&ip->ip_dst,ip_dest,sizeof ip_dest);
 
 	if (hmask&&check_ch((uint8_t *)(sp+offset),ntohs(udp->UDP_LEN_F)))
 		return;
